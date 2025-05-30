@@ -142,12 +142,19 @@ def compute_mpjpe(
             output="aligned_x",
         )
 
+    
+    valid_mask = ~torch.isnan(label_joint_positions).any(dim=-1)  # 如果一个关节的任何一个坐标是 NaN，则该关节无效
+    label_joint_positions[~valid_mask] = 0
+    # print(f"{label_joint_positions=}")
+    # 计算每个关节的欧几里得距离
+    # distance = torch.norm(pred - label_joint_positions, dim=-1) * valid_mask
+
     position_differences = pred_joint_positions - label_joint_positions
-    assert position_differences.shape == (num_samples, time, 22, 3)
+    assert position_differences.shape == (num_samples, time, 17, 3)  #(num_samples, time, 22, 3)
 
     # Per-joint position errors, in millimeters.
-    pjpe = torch.linalg.norm(position_differences, dim=-1) * 1000.0
-    assert pjpe.shape == (num_samples, time, 22)
+    pjpe = torch.linalg.norm(position_differences, dim=-1) * 100.0 * valid_mask
+    assert pjpe.shape == (num_samples, time, 17)  #(num_samples, time, 22)
 
     # Mean per-joint position errors.
     mpjpe = torch.mean(pjpe.reshape((num_samples, -1)), dim=-1)

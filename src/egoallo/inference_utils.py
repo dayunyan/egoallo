@@ -128,7 +128,8 @@ class InferenceInputTransforms(TensorDataclass):
 
         provider = create_vrs_data_provider(str(vrs_path))
         device_calib = provider.get_device_calibration()
-        T_device_cpf = device_calib.get_transform_device_cpf().to_matrix()
+        T_device_cpf = device_calib.get_transform_device_cpf().to_matrix() # [4, 4]
+        print(f"T_device_cpf: {T_device_cpf}")
 
         # Get downsampled CPF frames.
         aria_fps = len(closed_loop_traj) / (
@@ -145,6 +146,10 @@ class InferenceInputTransforms(TensorDataclass):
             assert T_world_device.shape == (4, 4)
             Ts_world_device.append(T_world_device)
             Ts_world_cpf.append(T_world_device @ T_device_cpf)
+            # print(
+            #     f"Pose {i}: {closed_loop_traj[i].tracking_timestamp}, "
+            #     f"{T_world_device}, {Ts_world_cpf[-1]}"
+            # )
             out_timestamps_secs.append(
                 closed_loop_traj[i].tracking_timestamp.total_seconds()
             )
@@ -152,9 +157,9 @@ class InferenceInputTransforms(TensorDataclass):
         return InferenceInputTransforms(
             Ts_world_device=SE3.from_matrix(torch.from_numpy(np.array(Ts_world_device)))
             .parameters()
-            .to(torch.float32),
+            .to(torch.float32), # [N, 7]
             Ts_world_cpf=SE3.from_matrix(torch.from_numpy(np.array(Ts_world_cpf)))
             .parameters()
-            .to(torch.float32),
+            .to(torch.float32), # [N, 7]
             pose_timesteps=tuple(out_timestamps_secs),
         )

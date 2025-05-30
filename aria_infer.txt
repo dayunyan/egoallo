@@ -1,0 +1,106 @@
+Loaded #closed loop trajectory poses records: 53601
+Loaded #WristAndPalmPose: 545
+Found splat at egoallo_example_trajectories/coffeemachine/scene.splat
+Found splat at egoallo_example_trajectories/coffeemachine/scene.splat
+Loading pre-filtered points
+points cloud data: type of points_data: <class 'numpy.ndarray'>, floor_z: <class 'float'>
+ shape of points_data: (125341, 3), floor_z: -1.4384744999999999
+T_device_cpf: [[-3.18601373e-02 -9.98629532e-01 -4.15209507e-02  4.99302002e-03]
+ [ 7.93353401e-01  1.74815473e-09 -6.08761350e-01 -5.14600901e-02]
+ [ 6.07927062e-01 -5.23360076e-02  7.92266136e-01 -4.99498807e-02]
+ [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  1.00000000e+00]]
+Loaded num_poses=53601 with aria_fps=1000.0186567164175, visualizing at fps=30
+TS data: type of Ts_world_device: <class 'torch.Tensor'>, Ts_world_cpf: <class 'torch.Tensor'>
+ shape of Ts_world_device: torch.Size([128, 7]), Ts_world_cpf: torch.Size([129, 7])
+Ts_world_device[-1, ...]=tensor([ 0.4544,  0.6198,  0.4951, -0.4052, -0.4960, -0.7554,  0.2969],
+       device='cuda:0')
+Ts_world_cpf[-1, ...]=tensor([ 0.5663,  0.7417, -0.2863, -0.2174, -0.5430, -0.7011,  0.2967],
+       device='cuda:0')
+Ts_world_cpf.shape=torch.Size([129, 7])
+Sampling 0/30
+Constraint optimization finished in 49.719895362854004sec
+Sampling 1/30
+Constraint optimization finished in 0.8767838478088379sec
+Sampling 2/30
+Constraint optimization finished in 0.8914318084716797sec
+Sampling 3/30
+Constraint optimization finished in 0.8824694156646729sec
+Sampling 4/30
+Constraint optimization finished in 0.9669191837310791sec
+Sampling 5/30
+Constraint optimization finished in 0.9663715362548828sec
+Sampling 6/30
+Constraint optimization finished in 1.0143816471099854sec
+Sampling 7/30
+Constraint optimization finished in 0.9259727001190186sec
+Sampling 8/30
+Constraint optimization finished in 0.9918038845062256sec
+Sampling 9/30
+Constraint optimization finished in 0.9720284938812256sec
+Sampling 10/30
+Constraint optimization finished in 0.9199967384338379sec
+Sampling 11/30
+Constraint optimization finished in 0.9448623657226562sec
+Sampling 12/30
+Constraint optimization finished in 1.0002167224884033sec
+Sampling 13/30
+Constraint optimization finished in 1.0647804737091064sec
+Sampling 14/30
+Constraint optimization finished in 1.0858511924743652sec
+Sampling 15/30
+Constraint optimization finished in 1.0568609237670898sec
+Sampling 16/30
+Constraint optimization finished in 1.0536308288574219sec
+Sampling 17/30
+Constraint optimization finished in 1.0553524494171143sec
+Sampling 18/30
+Constraint optimization finished in 1.0547749996185303sec
+Sampling 19/30
+Constraint optimization finished in 1.094412088394165sec
+Sampling 20/30
+Constraint optimization finished in 1.1388282775878906sec
+Sampling 21/30
+Constraint optimization finished in 1.1354343891143799sec
+Sampling 22/30
+Constraint optimization finished in 1.1240081787109375sec
+Sampling 23/30
+Constraint optimization finished in 1.0957071781158447sec
+Sampling 24/30
+Constraint optimization finished in 1.1007027626037598sec
+Sampling 25/30
+Constraint optimization finished in 1.1453149318695068sec
+Sampling 26/30
+Constraint optimization finished in 1.1746811866760254sec
+Sampling 27/30
+Constraint optimization finished in 1.2732160091400146sec
+Sampling 28/30
+Constraint optimization finished in 1.287813663482666sec
+Sampling 29/30
+Constraint optimization finished in 1.2744688987731934sec
+Constraint optimization finished in 1.1599152088165283sec
+RUNTIME (exclude first optimization) 33.068379163742065
+pred_posed.T_world_root[0, -1, :]=tensor([ 0.6772,  0.6939, -0.1816, -0.1640, -0.4266, -0.5877, -0.4243],
+       device='cuda:0'),
+pred_posed.Ts_world_joint[0, -1, :21, :]=tensor([[ 0.7063,  0.6627, -0.1936, -0.1567, -0.3634, -0.6114, -0.5201],
+        [ 0.6461,  0.7215, -0.2011, -0.1465, -0.4771, -0.5518, -0.5206],
+        [ 0.6834,  0.6867, -0.1868, -0.1625, -0.4173, -0.5595, -0.3025],
+        [ 0.6025,  0.7597, -0.2161, -0.1148, -0.3132, -0.6610, -0.9175],
+        [ 0.6515,  0.6981, -0.2309, -0.1866, -0.4702, -0.4907, -0.9290],
+        [ 0.6786,  0.6997, -0.1614, -0.1544, -0.4177, -0.5680, -0.1455],
+        [ 0.6321,  0.7507, -0.1210, -0.1493, -0.2275, -0.5366, -1.3251],
+        [ 0.6398,  0.6326, -0.2821, -0.3329, -0.3956, -0.4469, -1.3558],
+        [ 0.6541,  0.7128, -0.2005, -0.1547, -0.4279, -0.5898, -0.0838],
+        [ 0.6324,  0.7503, -0.1212, -0.1497, -0.2486, -0.6570, -1.4063],
+        [ 0.6400,  0.6321, -0.2830, -0.3327, -0.5237, -0.5069, -1.3996],
+        [ 0.5671,  0.7548, -0.2858, -0.1642, -0.4349, -0.5733,  0.1554],
+        [ 0.6384,  0.7030, -0.0705, -0.3053, -0.3507, -0.6084,  0.0559],
+        [ 0.7514,  0.6032, -0.2516, -0.0914, -0.4959, -0.5218,  0.0450],
+        [ 0.5663,  0.7417, -0.2863, -0.2174, -0.4804, -0.6378,  0.2109],
+        [ 0.2542,  0.5781,  0.1204, -0.7660, -0.2580, -0.6540,  0.0491],
+        [ 0.7074,  0.4372, -0.1824,  0.5246, -0.5894, -0.4613,  0.0462],
+        [ 0.3092, -0.0122, -0.2896, -0.9058, -0.3009, -0.6983, -0.2274],
+        [ 0.7231,  0.2568,  0.3880,  0.5105, -0.6855, -0.6041, -0.1705],
+        [ 0.2847,  0.0399, -0.3398, -0.8955, -0.5165, -0.8571, -0.1697],
+        [ 0.7235,  0.3505,  0.4988,  0.3240, -0.7463, -0.8636, -0.0870]],
+       device='cuda:0')
+Saving to egoallo_example_trajectories/coffeemachine/egoallo_outputs/20250512-084549_0-128.npz...saved!

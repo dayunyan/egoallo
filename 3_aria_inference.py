@@ -24,7 +24,7 @@ from egoallo.inference_utils import (
 from egoallo.sampling import run_sampling_with_stitching
 from egoallo.transforms import SE3, SO3
 from egoallo.vis_helpers import visualize_traj_and_hand_detections
-
+from egoallo.fncsmpl_extensions import get_T_world_root_from_cpf_pose
 
 @dataclasses.dataclass
 class Args:
@@ -73,6 +73,7 @@ def main(args: Args) -> None:
         print("No scene splat found.")
     # Get point cloud + floor.
     points_data, floor_z = load_point_cloud_and_find_ground(traj_paths.points_path)
+    print(f"points cloud data: type of points_data: {type(points_data)}, floor_z: {type(floor_z)}\n shape of points_data: {points_data.shape}, floor_z: {floor_z}")
 
     # Read transforms from VRS / MPS, downsampled.
     transforms = InferenceInputTransforms.load(
@@ -99,6 +100,9 @@ def main(args: Args) -> None:
         args.start_index + 1 : args.start_index + args.traj_length + 1
     ]
     del transforms
+    print(f"TS data: type of Ts_world_device: {type(Ts_world_device)}, Ts_world_cpf: {type(Ts_world_cpf)}\n shape of Ts_world_device: {Ts_world_device.shape}, Ts_world_cpf: {Ts_world_cpf.shape}")
+    print(f"{Ts_world_device[-1, ...]=}\n{Ts_world_cpf[-1, ...]=}")
+    print(f"{Ts_world_cpf[:, 4:]=}")
 
     # Get temporally corresponded HaMeR detections.
     if traj_paths.hamer_outputs is not None:
@@ -138,12 +142,23 @@ def main(args: Args) -> None:
         guidance_inner=args.guidance_inner,
         guidance_post=args.guidance_post,
         Ts_world_cpf=Ts_world_cpf,
-        hamer_detections=hamer_detections,
+        hamer_detections=None,
         aria_detections=aria_detections,
         num_samples=args.num_samples,
         device=device,
         floor_z=floor_z,
     )
+
+    pred_posed = body_model.with_shape(traj.betas).with_pose(
+        T_world_root=SE3.identity(device, torch.float32).wxyz_xyz,
+        local_quats=SO3.from_matrix(
+            torch.cat([traj.body_rotmats, traj.hand_rotmats], dim=2)
+        ).wxyz,
+    )
+    pred_posed = pred_posed.with_new_T_world_root(
+        get_T_world_root_from_cpf_pose(pred_posed, Ts_world_cpf[1:, ...])
+    )
+    print(f"{pred_posed.T_world_root[0, -1, :]=},\n{pred_posed.Ts_world_joint[0, -1, :21, :]=}")
 
     # Save outputs in case we want to visualize later.
     if args.save_traj:
